@@ -1,4 +1,4 @@
-import math
+import math,itertools
 
 l1=input()
 l2=input()
@@ -14,6 +14,9 @@ n_actions=l2[2].split(' ')
 n_actions.pop(0)
 n_actions.pop(len(n_actions)-1)
 n_actions=list(map(int,n_actions))
+if n_players!=len(n_actions):
+    print("ERROR: Number of actions for players and number of players not same.")
+    exit()
 n_players=min(n_players,len(n_actions))
 input()
 payoffs=list(map(float,input().split()))
@@ -29,7 +32,10 @@ step_size[0]=n_players
 for i in range(1,n_players):
         step_size[i]=step_size[i-1]*n_actions[i-1]
 max_len=step_size[-1]*n_actions[-1]
-print(step_size)
+if max_len!=len(payoffs):
+    print("ERROR: Number of utilities should be number_of_players * product(no_actions)")
+    exit()
+# print(step_size)
 
 def get_dominant_strategy(player_idx):
     idx_flag={}
@@ -61,17 +67,41 @@ def get_dominant_strategy(player_idx):
                 dominant_strats.append(action)
         except:
             pass
-    if not len(dominant_strats):
-        print("No dominant strategies for Player",player_idx)
-    else:
-        print("Dominant strategies for Player",player_idx,*dominant_strats)
-    return dominant_strats,len(action_count)
+    # if not len(dominant_strats):
+    #     print("No dominant strategies for Player",player_idx)
+    # else:
+    #     print("Dominant strategies for Player",player_idx,*dominant_strats)
+    return dominant_strats,action_count
 
 dominant_strategies={}
 action_counts={}
+dominant_strategies_flag={}
 flag=False
+flag1=False
+cross_arr=[]
 for p in range(0,n_players):
     dominant_strategies[p],action_counts[p]=get_dominant_strategy(p)
-    print(dominant_strategies[p],action_counts[p])
+    # print(dominant_strategies[p],action_counts[p])
+    cross_arr.append(dominant_strategies[p])
+    if(len(dominant_strategies[p])>1):
+        flag1=True
     if not len(dominant_strategies[p]):
         flag=True
+if(flag):
+    print("No dominant strategy equilibriums exist.")
+    exit()
+else:
+    print("Dominant strategy equilibriums exist.")
+    print()
+    if(flag1):
+        print("No strongly dominant strategies exist.")
+        print()
+        print("Weakly dominant strategies are: ")
+        for i in itertools.product(*cross_arr):
+            print(*i)
+    else:
+        print("Strongly dominant strategies are: ")
+        print()
+        print("No weakly dominant strategies exist.")
+        for i in itertools.product(*cross_arr):
+            print(*i)

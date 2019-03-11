@@ -56,7 +56,6 @@ def get_dominant_strategy(player_idx):
             action=1
             while(action<=n_actions[player_idx] and x<max_len):
                 if payoffs[x]==ans:
-                        max_action_count+=1
                         try:
                             action_count[action]+=1
                         except:
@@ -66,6 +65,7 @@ def get_dominant_strategy(player_idx):
     for action in range(1,n_actions[player_idx]+1):
         try:
             if action_count[action]==max_len/(n_players*n_actions[player_idx]):
+                max_action_count+=1
                 dominant_strats.append(action)
         except:
             pass

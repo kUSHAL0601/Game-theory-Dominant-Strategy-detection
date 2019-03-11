@@ -1,0 +1,6 @@
+Dominant strategy equilibriums exist.
+
+Strongly dominant strategies are: 
+2 1
+
+No weakly dominant strategies exist.

@@ -101,7 +101,7 @@ else:
             print(*i)
     else:
         print("Strongly dominant strategies are: ")
-        print()
-        print("No weakly dominant strategies exist.")
         for i in itertools.product(*cross_arr):
             print(*i)
+        print()
+        print("No weakly dominant strategies exist.")

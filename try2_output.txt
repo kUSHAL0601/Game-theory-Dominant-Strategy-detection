@@ -1,0 +1,7 @@
+Dominant strategy equilibriums exist.
+
+No strongly dominant strategies exist.
+
+Weakly dominant strategies are: 
+2 2 1
+2 2 2

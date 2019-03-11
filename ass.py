@@ -41,6 +41,7 @@ def get_dominant_strategy(player_idx):
     idx_flag={}
     action_count={}
     dominant_strats=[]
+    max_action_count=0
     for j in range(player_idx,max_len+1,n_players):
         ans=-math.inf
         if j not in idx_flag:
@@ -55,6 +56,7 @@ def get_dominant_strategy(player_idx):
             action=1
             while(action<=n_actions[player_idx] and x<max_len):
                 if payoffs[x]==ans:
+                        max_action_count+=1
                         try:
                             action_count[action]+=1
                         except:
@@ -71,19 +73,19 @@ def get_dominant_strategy(player_idx):
     #     print("No dominant strategies for Player",player_idx)
     # else:
     #     print("Dominant strategies for Player",player_idx,*dominant_strats)
-    return dominant_strats,action_count
+    return dominant_strats,max_action_count
 
 dominant_strategies={}
-action_counts={}
+max_action_counts={}
 dominant_strategies_flag={}
 flag=False
 flag1=False
 cross_arr=[]
 for p in range(0,n_players):
-    dominant_strategies[p],action_counts[p]=get_dominant_strategy(p)
-    # print(dominant_strategies[p],action_counts[p])
+    dominant_strategies[p],max_action_counts[p]=get_dominant_strategy(p)
+    # print(dominant_strategies[p],max_action_counts[p])
     cross_arr.append(dominant_strategies[p])
-    if(len(dominant_strategies[p])>1):
+    if(max_action_counts[p]>1):
         flag1=True
     if not len(dominant_strategies[p]):
         flag=True
